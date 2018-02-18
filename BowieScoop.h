@@ -32,6 +32,7 @@
 #define END_PARALLEL_BOTTOM 1100 // parallel to ground when arm is lowered 1100
 #define END_HOME 1400 // parallel to arm, good for digging
 #define END_MAX 1800 // down
+#define END_REFLEX 2300 // mega down
 
 #define SERVO_MAX_US 2500
 #define SERVO_MIN_US 500

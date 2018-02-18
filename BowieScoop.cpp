@@ -79,7 +79,7 @@ void BowieScoop::moveEnd(int endPos, int step, int del) {
   int prev_pos = getEndPos();
   if(prev_pos > endPos) { // going towards END_MIN
     for(int i=prev_pos; i>endPos; i-=step) {
-      Serial << "S" << i << endl;
+      //Serial << "S" << i << endl;
       scoop.writeMicroseconds(i);
       end_position = i;
       delay(del);
@@ -87,7 +87,7 @@ void BowieScoop::moveEnd(int endPos, int step, int del) {
     }
   } else if(prev_pos <= endPos) { // going towards END_MAX
     for(int i=prev_pos; i<endPos; i+=step) {
-      Serial << "S" << i << endl;
+      //Serial << "S" << i << endl;
       scoop.writeMicroseconds(i);
       end_position = i;
       delay(del);

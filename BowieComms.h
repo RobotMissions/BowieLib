@@ -39,7 +39,7 @@
 #define MSG_DEBUG false  // anything with adding / removing Msgs
 
 // Operator controllers
-#define MAX_CONTROLLERS 10
+#define MAX_CONTROLLERS 3
 
 // Messages
 #define MSG_QUEUE_SIZE 3

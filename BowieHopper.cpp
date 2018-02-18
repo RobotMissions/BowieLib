@@ -56,12 +56,12 @@ void BowieHopper::moveHopper(int hopperPos, int step, int del) {
   //   }
   // }
 
-  Serial << "hopper" << endl;
+  //Serial << "hopper" << endl;
 
   int prev_pos = getHopperPos();
   if(prev_pos > hopperPos) { // towards TILT_MIN
     for(int i=prev_pos; i>hopperPos; i-=step) {
-      Serial << i << endl;
+      //Serial << i << endl;
       tilt.writeMicroseconds(i);
       hopper_position = i;
       delay(del);
@@ -69,7 +69,7 @@ void BowieHopper::moveHopper(int hopperPos, int step, int del) {
     }
   } else if(prev_pos <= hopperPos) { // towards TILT_MAX
     for(int i=prev_pos; i<hopperPos; i+=step) {
-      Serial << i << endl;
+      //Serial << i << endl;
       tilt.writeMicroseconds(i);
       hopper_position = i;
       delay(del);
@@ -127,7 +127,7 @@ void BowieHopper::moveLid(int lidPos, int step, int del) {
   int prev_pos = getLidPos();
   if(prev_pos > lidPos) { // going to LID_MIN
     for(int i=prev_pos; i>lidPos; i-=step) {
-      Serial << "H" << i << endl;
+      //Serial << "H" << i << endl;
       //lid.write(90);
       lid.writeMicroseconds(i);
       lid_position = i;
@@ -136,7 +136,7 @@ void BowieHopper::moveLid(int lidPos, int step, int del) {
     }
   } else if(prev_pos <= lidPos) {
     for(int i=prev_pos; i<lidPos; i+=step) {
-      Serial << "H" << i << endl;
+      //Serial << "H" << i << endl;
       //lid.write(180);
       lid.writeMicroseconds(i);
       lid_position = i;

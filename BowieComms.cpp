@@ -214,7 +214,7 @@ void BowieComms::updateComms() {
   // from the controller. So if we don't hear, we will actively try to re-establish
   // the comms by sending this.
   if(current_time-last_tx >= HEARTBEAT_MS) {
-    if(COMM_DEBUG) Serial << "Sending a heartbeat" << endl;
+    if(COMM_DEBUG) Serial << millis() << " Sending a heartbeat" << endl;
     connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
     last_tx = current_time;
   }
@@ -773,7 +773,7 @@ void BowieComms::processAction(Msg m) {
       connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
     }
   } else {
-    chooseNextMessage();
+    //chooseNextMessage();
     sendNextMsg();
   }
   

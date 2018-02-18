@@ -10,7 +10,7 @@ void BowieCurrentSensor::begin() {
   MONITOR_OVER_CURRENT = true;
 
   // over current thresholds
-  CURRENT_THRESH_MAX = 880;   // analog read value
+  CURRENT_THRESH_MAX = 1000;//880;   // analog read value
   CURRENT_THRESH_MIN = 400;   // analog read value
 
   // how many of these triggers accumulate within
