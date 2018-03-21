@@ -63,6 +63,7 @@ class BowieDrive {
     // driving algorithms
     void rampSpeed(bool dir, int start, int end, int step, int del);
     void goSpeed(bool dir, int speed, int del);
+    void goSpeed(bool dir, bool side, int speed, int del);
     void turnSequence(bool dir);
     void resetTurnSequence();
 

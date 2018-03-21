@@ -5,7 +5,7 @@ BowieArm::BowieArm() {
 }
 
 void BowieArm::begin() {
-  arm_position = ARM_PARK;
+  arm_position = ARM_HOME;
   arm_parked = false;
 }
 
@@ -35,7 +35,7 @@ void BowieArm::servoInterruption(int key, int val) {
 
 // - Arm
 void BowieArm::moveArm(int armPos) {
-  moveArm(armPos, 1, 3);
+  moveArm(armPos, 1, 10);
 }
 
 void BowieArm::moveArm(int armPos, int step, int del) {
@@ -93,3 +93,8 @@ bool BowieArm::getArmParked() {
 int BowieArm::getArmPos() {
   return arm_position;
 }
+
+void BowieArm::setArmPos(int armPos) {
+  arm_position = armPos;
+}
+

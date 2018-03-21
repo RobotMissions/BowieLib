@@ -67,7 +67,7 @@ bool BowieScoop::getScoopProbeR() {
 
 // - End
 void BowieScoop::moveEnd(int endPos) {
-  moveEnd(endPos, 1, 3);
+  moveEnd(endPos, 1, 6);
 }
 
 void BowieScoop::moveEnd(int endPos, int step, int del) {
@@ -121,5 +121,9 @@ bool BowieScoop::getEndParked() {
 
 int BowieScoop::getEndPos() {
   return end_position;
+}
+
+void BowieScoop::setEndPos(int endPos) {
+  end_position = endPos;
 }
 

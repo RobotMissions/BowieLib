@@ -28,7 +28,7 @@
 // Servo positions
 #define ARM_MIN 500 // down 700
 #define ARM_HOME 1400 // middle 1200 orig
-#define ARM_MAX 2300 // up, 90 deg perpenducular to base
+#define ARM_MAX 2200 // up, 90 deg perpenducular to base
 #define ARM_PARK 2400 // leaning against hopper a bit
 
 #define SERVO_MAX_US 2500
@@ -64,6 +64,7 @@ class BowieArm {
     void unparkArm();
     bool getArmParked();
     int getArmPos();
+    void setArmPos(int armPos);
 
   private:
 

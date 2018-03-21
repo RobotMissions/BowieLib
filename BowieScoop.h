@@ -67,6 +67,7 @@ class BowieScoop {
     void unparkEnd();
     bool getEndParked();
     int getEndPos();
+    void setEndPos(int endPos);
 
     // Probes
     uint16_t END_TOUCHDOWN;
