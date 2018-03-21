@@ -64,6 +64,9 @@ void BowieComms::begin() {
   }
   msg_send_items = 0;
 
+  // Module
+  REPLY_ENABLED = true;
+
 }
 
 void BowieComms::setRobotID(uint8_t the_robot_id) {
@@ -84,6 +87,10 @@ void BowieComms::set_controller_removed_callback( void (*controllerRemovedCallba
 
 void BowieComms::set_received_action_callback( void (*receivedActionCallback)(Msg m) ) {
   _receivedActionCallback = receivedActionCallback;
+}
+
+void BowieComms::disableReply() {
+  REPLY_ENABLED = false;
 }
 
 void BowieComms::initComms(int conn, int baud) {
@@ -215,7 +222,7 @@ void BowieComms::updateComms() {
   // the comms by sending this.
   if(current_time-last_tx >= HEARTBEAT_MS) {
     if(COMM_DEBUG) Serial << millis() << " Sending a heartbeat" << endl;
-    connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
+    if(REPLY_ENABLED) connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
     last_tx = current_time;
   }
 
@@ -774,7 +781,15 @@ void BowieComms::processAction(Msg m) {
     }
   } else {
     //chooseNextMessage();
-    sendNextMsg();
+
+    // the instance where REPLY_ENABLED would be false is when
+    // a module is connected (ie, with an arduino), and the Bowie
+    // Brain has SIMPLE_MESSAGE_FORWARDING enabled. we wouldn't
+    // want the brain to spam the arduino because then we can't
+    // read the messages on the module.
+    if(REPLY_ENABLED) {
+      sendNextMsg();
+    }
   }
   
   _receivedActionCallback(m);

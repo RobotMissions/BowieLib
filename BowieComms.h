@@ -158,6 +158,10 @@ class BowieComms {
     void connSend(char action, char cmd, uint8_t key, uint16_t val, char cmd2, uint8_t key2, uint16_t val2, char delim);
     void connSendEasy(char c);
 
+    // Module
+    bool REPLY_ENABLED; // true by default
+    void disableReply();
+
   private:
 
     // Callbacks
