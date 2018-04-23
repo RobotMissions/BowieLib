@@ -29,7 +29,8 @@
 // Servo positions
 #define END_MIN 700 // up
 #define END_PARALLEL_TOP 2300 // parallel to ground when arm is raised, raised a bit to keep debris in
-#define END_PARALLEL_BOTTOM 1100 // parallel to ground when arm is lowered 1100
+//#define END_PARALLEL_BOTTOM 1100 // (previously)
+#define END_PARALLEL_BOTTOM 1350 // parallel to ground when arm is lowered 1100
 #define END_HOME 1400 // parallel to arm, good for digging
 #define END_MAX 1800 // down
 #define END_REFLEX 2300 // mega down

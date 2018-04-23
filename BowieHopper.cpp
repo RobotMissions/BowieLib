@@ -34,7 +34,8 @@ void BowieHopper::setServoInterruptCallback( void (*servoInterruptCallback)(int 
 }
 
 void BowieHopper::servoInterruption(int key, int val) {
-  _servoInterruptCallback(key, val);
+  // TODO: fix this from repeating messages
+  //_servoInterruptCallback(key, val);
 }
 
 // - Hopper

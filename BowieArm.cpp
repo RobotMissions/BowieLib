@@ -20,9 +20,9 @@ void BowieArm::setArm2ServoPin(uint8_t p) {
 void BowieArm::initServos() {
   pinMode(SERVO_ARM1, OUTPUT);
   pinMode(SERVO_ARM2, OUTPUT);
-  
-  arm.attach(SERVO_ARM1);
-  arm2.attach(SERVO_ARM2);
+
+  arm.attach(SERVO_ARM1, false);
+  arm2.attach(SERVO_ARM2, false);
 }
 
 void BowieArm::setServoInterruptCallback( void (*servoInterruptCallback)(int key, int val) ) {

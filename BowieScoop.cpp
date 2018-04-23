@@ -42,7 +42,8 @@ void BowieScoop::setServoInterruptCallback( void (*servoInterruptCallback)(int k
 }
 
 void BowieScoop::servoInterruption(int key, int val) {
-  _servoInterruptCallback(key, val);
+  // TODO: fix this from repeating messages
+  //_servoInterruptCallback(key, val);
 }
 
 
