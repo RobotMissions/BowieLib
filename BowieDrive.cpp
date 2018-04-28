@@ -207,19 +207,19 @@ void BowieDrive::goSpeed(bool dir, bool side, int speed, int del) {
   
   if(side) { // true == left
     if(dir) {
-      motor_setDir(0, MOTOR_DIR_FWD);
-      motor_setSpeed(0, speed);
-    } else {
-      motor_setDir(0, MOTOR_DIR_REV);
-      motor_setSpeed(0, speed);
-    }
-  } else { // false == right
-    if(dir) {
       motor_setDir(1, MOTOR_DIR_FWD);
       motor_setSpeed(1, speed);
     } else {
       motor_setDir(1, MOTOR_DIR_REV);
       motor_setSpeed(1, speed);
+    }
+  } else { // false == right
+    if(dir) {
+      motor_setDir(0, MOTOR_DIR_FWD);
+      motor_setSpeed(0, speed);
+    } else {
+      motor_setDir(0, MOTOR_DIR_REV);
+      motor_setSpeed(0, speed);
     }
   }
   delay(del);
