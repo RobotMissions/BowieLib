@@ -6,6 +6,10 @@ BowieDrive::BowieDrive() {
 
 void BowieDrive::begin() {
 
+  // direction
+  MOTOR_DIR_FWD = false;
+  MOTOR_DIR_REV = true;
+
   // states
   TURN_SEQUENCE_MODE = true;
 

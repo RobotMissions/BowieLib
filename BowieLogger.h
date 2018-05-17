@@ -55,7 +55,7 @@
 
 #define NUM_DATA_POINTS 32
 
-struct LogLine { // 31 points
+struct LogLine { // 32 points
   time_t sample_time;
   uint8_t motor_a_speed;
   uint8_t motor_a_dir;

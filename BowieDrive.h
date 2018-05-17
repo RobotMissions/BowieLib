@@ -34,16 +34,16 @@
 #define MOTORB_CTRL2 12 // ?BL
 */
 
-// motor directions
-#define MOTOR_DIR_FWD false
-#define MOTOR_DIR_REV true
-
 class BowieDrive {
 
   public:
     BowieDrive();
     void begin();
     void initMotors();
+
+    // direction
+    bool MOTOR_DIR_FWD;
+    bool MOTOR_DIR_REV;
 
     // pins
     void setMotorASpeedPin(uint8_t p);
