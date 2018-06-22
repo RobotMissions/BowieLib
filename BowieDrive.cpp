@@ -9,6 +9,7 @@ void BowieDrive::begin() {
   // direction
   MOTOR_DIR_FWD = false;
   MOTOR_DIR_REV = true;
+  TURN_DIR = true;
 
   // states
   TURN_SEQUENCE_MODE = true;
@@ -208,7 +209,7 @@ void BowieDrive::goSpeed(bool dir, int speed, int del) {
 }
 
 void BowieDrive::goSpeed(bool dir, bool side, int speed, int del) {
-  
+
   if(side) { // true == left
     if(dir) {
       motor_setDir(1, MOTOR_DIR_FWD);
@@ -229,7 +230,10 @@ void BowieDrive::goSpeed(bool dir, bool side, int speed, int del) {
   delay(del);
 }
 
-void BowieDrive::turnSequence(bool dir) { // true = right, false = left
+void BowieDrive::turnSequence(bool turn_dir) { // true = right, false = left
+
+  bool dir = turn_dir;
+  if(!TURN_DIR) dir = !dir;
 
   current_time = millis();
   uint8_t max_steps = 5;

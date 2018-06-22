@@ -44,6 +44,7 @@ class BowieDrive {
     // direction
     bool MOTOR_DIR_FWD;
     bool MOTOR_DIR_REV;
+    bool TURN_DIR;
 
     // pins
     void setMotorASpeedPin(uint8_t p);
@@ -64,7 +65,7 @@ class BowieDrive {
     void rampSpeed(bool dir, int start, int end, int step, int del);
     void goSpeed(bool dir, int speed, int del);
     void goSpeed(bool dir, bool side, int speed, int del);
-    void turnSequence(bool dir);
+    void turnSequence(bool turn_dir);
     void resetTurnSequence();
 
     // getters
