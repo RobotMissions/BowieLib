@@ -194,6 +194,62 @@ void BowieLogger::writeLogData() {
   log_interval = now() + INTERVAL_SECS;
 }
 
+void BowieLogger::logEvent(time_t sample_time, char action, char cmd1, uint8_t key1,
+  uint16_t val1, char cmd2, uint8_t key2, uint16_t val2, char delim) {
+
+  if(!LOGGING) return;
+
+  openLogFile();
+  if(DEBUG_PRINTS) Serial.println("Logging event");
+
+  logging_file.print(hour(sample_time));
+  logging_file.print(":");
+  if(minute(sample_time) < 10) {
+    logging_file.print("0");
+  }
+  logging_file.print(minute(sample_time));
+  logging_file.print(":");
+  if(second(sample_time) < 10) {
+    logging_file.print("0");  
+  }
+  logging_file.print(second(sample_time));
+  logging_file.print(",");
+
+  logging_file.print(millis());
+  logging_file.print(",");
+
+  logging_file.print("###");
+  logging_file.print(",");
+
+  logging_file.print(action);
+  logging_file.print(",");
+
+  logging_file.print(cmd1);
+  logging_file.print(",");
+
+  logging_file.print(key1);
+  logging_file.print(",");
+
+  logging_file.print(val1);
+  logging_file.print(",");
+
+  logging_file.print(cmd2);
+  logging_file.print(",");
+
+  logging_file.print(key2);
+  logging_file.print(",");
+
+  logging_file.print(val2);
+  logging_file.print(",");
+
+  logging_file.print(delim);
+
+  logging_file.print("\r\n");
+
+  closeLogFile();
+  
+}
+
 void BowieLogger::closeLogFile() {
   if(DEBUG_PRINTS) Serial.println("Closing log file");
   logging_file.close();

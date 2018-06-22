@@ -164,6 +164,8 @@ class BowieLogger {
     void setLogData_u16(int log_item, uint16_t val);
     void setLogData_f(int log_item, float val);
     void setLogData_s(int log_item, String val);
+    void logEvent(time_t sample_time, char action, char cmd1, uint8_t key1,
+    	uint16_t val1, char cmd2, uint8_t key2, uint16_t val2, char delim);
 
   private:
     // TimeFuncs
