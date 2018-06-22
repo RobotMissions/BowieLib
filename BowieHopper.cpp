@@ -11,6 +11,7 @@ void BowieHopper::begin() {
   hopper_parked = false;
   lid_parked = false;
 
+  SERVO_HOPPER_OFFSET = 0;
 }
 
 void BowieHopper::setServoHopperPivotPin(uint8_t p) {
@@ -63,7 +64,7 @@ void BowieHopper::moveHopper(int hopperPos, int step, int del) {
   if(prev_pos > hopperPos) { // towards TILT_MIN
     for(int i=prev_pos; i>hopperPos; i-=step) {
       //Serial << i << endl;
-      tilt.writeMicroseconds(i);
+      tilt.writeMicroseconds(i + SERVO_HOPPER_OFFSET);
       hopper_position = i;
       delay(del);
       servoInterruption(SERVO_HOPPER_KEY, i);
@@ -71,13 +72,13 @@ void BowieHopper::moveHopper(int hopperPos, int step, int del) {
   } else if(prev_pos <= hopperPos) { // towards TILT_MAX
     for(int i=prev_pos; i<hopperPos; i+=step) {
       //Serial << i << endl;
-      tilt.writeMicroseconds(i);
+      tilt.writeMicroseconds(i + SERVO_HOPPER_OFFSET);
       hopper_position = i;
       delay(del);
       servoInterruption(SERVO_HOPPER_KEY, i);
     }
   }
-  tilt.writeMicroseconds(hopperPos);
+  tilt.writeMicroseconds(hopperPos + SERVO_HOPPER_OFFSET);
   hopper_position = hopperPos;
   delay(del);
   servoInterruption(SERVO_HOPPER_KEY, hopperPos);

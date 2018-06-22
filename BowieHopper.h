@@ -60,6 +60,7 @@ class BowieHopper {
 
     // Other
     void servoInterruption(int key, int val);
+    int SERVO_HOPPER_OFFSET; // nudges the servo into alignment if it's off by a spline or two
 
     // Hopper
     void moveHopper(int hopperPos);

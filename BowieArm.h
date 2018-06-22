@@ -56,6 +56,7 @@ class BowieArm {
 
     // Other
     void servoInterruption(int key, int val);
+    int SERVO_OFFSET; // this is a var that nudges arm servo pos (eg, in case of servo horn spline offset)
 
     // Arm
     void moveArm(int armPos);
