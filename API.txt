@@ -20,10 +20,35 @@ $ X = id
 
 Robot -> Operator
 -----------------
+# a = gps altitude
+# A = servo num & position
+# b = imu pitch
+# c = imu roll
+# D = led num & val
+# d = imu yaw
 # E = motor current sensor
+# e = gps sats & hdop
 # F = servo current sensor
+# H = motor a dir & speed
+# I = motor b dir & speed
+# K = humidity & temperature
+# O = battery
+# T = latitude
+# U = longitude
+# V = compass heading
+# w = uv sensor and wind sensor
 @ Z = reserved for testing
 $ W = id
+
+// letters remaining:
+// f, g, h, i, k, l, m, n, o, p, q, r, s, t, u, v, x, y, z
+
+
+
+Pi -> Robot
+------------
+@ M = send a message
+
 
 --------
 
@@ -74,7 +99,9 @@ Log File Column Headers (by default)
   log_headers[29] = "Humidity";
   log_headers[30] = "Temperature";
 
-  log_headers[31] = "uRADMonitor";
+  log_headers[31] = "UV";
+  log_headers[32] = "Wind";
+  log_headers[33] = "uRADMonitor";
 
 ------------
 
