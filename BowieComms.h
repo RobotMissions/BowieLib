@@ -34,7 +34,7 @@
 #define BOT_DEBUG true   // anything with the robot
 #define COMM_DEBUG false // anything with promulgate
 #define OP_DEBUG true    // anything with buttons, or op in general
-#define XBEE_DEBUG false // anything with the xbee scope
+#define XBEE_DEBUG true // anything with the xbee scope
 #define CONN_DEBUG false // anything with the connection stack
 #define MSG_DEBUG false  // anything with adding / removing Msgs
 
@@ -56,6 +56,7 @@
 #define PIXY_CONN 4  // same as above
 #define BT_CONN 5
 #define ARDUINO_CONN 6
+#define XBEE_TRANSPARENT_CONN 7
 
 struct Packet {
   char cmd;

@@ -135,6 +135,17 @@ void BowieComms::initComms(int conn, int baud) {
     CONN_TYPE = XBEE_CONN;
     possible = true;
 
+  } else if(conn == XBEE_TRANSPARENT_CONN) {
+
+    // Start xbee's serial
+    Serial2.begin(baud);
+
+    // Promulgate
+    promulgate = Promulgate(&Serial2, &Serial2);
+
+    CONN_TYPE = XBEE_TRANSPARENT_CONN;
+    possible = true;
+
   } else if(conn == GPS_CONN) {
 
     Serial3.begin(baud);
@@ -358,6 +369,60 @@ bool BowieComms::xbeeRead() {
 
   xbee.readPacket();
 
+  if(XBEE_DEBUG) Serial << "Xbee response: " << xbee.getResponse().getApiId() << endl;
+
+  XBeeAddress64 senderLongAddress = rx.getRemoteAddress64();
+  if(XBEE_DEBUG) Serial.print(msg_rx_count);
+  if(XBEE_DEBUG) Serial.print(" >>>> Received data from ");
+  if(XBEE_DEBUG) print32Bits(senderLongAddress.getMsb());
+  if(XBEE_DEBUG) print32Bits(senderLongAddress.getLsb());
+  if(XBEE_DEBUG) Serial.println(": ");
+  delay(1000);
+
+
+  // --- 900 MHz
+  if(xbee.getResponse().getApiId() == 0x8B) {
+
+    if(XBEE_DEBUG) Serial << "RX" << endl;
+
+    xbee.getResponse().getZBRxResponse(rx);
+
+    XBeeAddress64 senderLongAddress = rx.getRemoteAddress64();
+    if(XBEE_DEBUG) Serial.print(msg_rx_count);
+    if(XBEE_DEBUG) Serial.print(" >>>> Received data from ");
+    if(XBEE_DEBUG) print32Bits(senderLongAddress.getMsb());
+    if(XBEE_DEBUG) print32Bits(senderLongAddress.getLsb());
+    if(XBEE_DEBUG) Serial.println(": ");
+
+    addXbeeToList(senderLongAddress);
+    updateRxTime(senderLongAddress);
+
+    for(int i=0; i<32; i++) {
+      message_rx[i] = ' ';
+    }
+
+    /*
+    // ascii representation of text sent through xbee
+    if(XBEE_DEBUG) Serial << "This is the data: ";
+    for (int i=0; i <rx.getDataLength(); i++){
+      if (!iscntrl(rx.getData()[i])) {
+        message_rx[i] = (char)rx.getData()[i];
+        if(XBEE_DEBUG) Serial.write(message_rx[i]);
+      }
+    }
+    Serial.println();
+    for(int i=0; i<10; i++) {
+      if(XBEE_DEBUG) Serial << (char)message_rx[i];
+    }
+    */
+    last_rx = millis();
+    return true;
+
+  }
+
+
+  // --- 2.4GHz
+
   if (xbee.getResponse().isAvailable()) { // we got something
 
     if(XBEE_DEBUG) Serial << "Xbee response: " << xbee.getResponse().getApiId();
@@ -470,8 +535,6 @@ void BowieComms::connRead() {
 
   } else if(CONN_TYPE == XBEE_CONN) {
 
-    if(XBEE_DEBUG) Serial << "Conn read" << endl;
-
     while(xbeeRead()) {
       if(XBEE_DEBUG) Serial << "\nRead...<< ";
       for(int i=0; i<=rx.getDataLength(); i++) {
@@ -480,6 +543,19 @@ void BowieComms::connRead() {
         if(XBEE_DEBUG) Serial << c;
         if(XBEE_DEBUG) { if(c == '!' || c == '?' || c == ';') Serial << endl; }
       }
+    }
+
+  } else if(CONN_TYPE == XBEE_TRANSPARENT_CONN) {
+
+    if(Serial2.available()) {
+      Serial << "here" << endl;
+    }
+
+    while(Serial2.available()) {
+      c = Serial2.read();
+      promulgate.organize_message(c);
+      Serial << c;
+      if(c == '!' || c == '?' || c == ';') Serial << endl;
     }
 
   } else if(CONN_TYPE == GPS_CONN) {
@@ -622,7 +698,7 @@ void BowieComms::connSend(char action, char cmd, uint8_t key, uint16_t val, char
   
   if(CONN_TYPE == PI_CONN) {
 
-    Serial1.print(message_tx);
+    Serial1.println(message_tx);
     last_tx = current_time;
 
   } else if(CONN_TYPE == XBEE_CONN) {
@@ -653,27 +729,27 @@ void BowieComms::connSend(char action, char cmd, uint8_t key, uint16_t val, char
 
   } else if(CONN_TYPE == GPS_CONN) {
 
-    Serial3.print(message_tx);
+    Serial3.println(message_tx);
     last_tx = current_time;
 
   } else if(CONN_TYPE == PIXY_CONN) {
 
     #ifdef HAS_KINETISK_UART3
-    Serial4.print(message_tx);
+    Serial4.println(message_tx);
     last_tx = current_time;
     #endif
 
   } else if(CONN_TYPE == BT_CONN) {
 
     #ifdef HAS_KINETISK_UART4
-    Serial5.print(message_tx);
+    Serial5.println(message_tx);
     last_tx = current_time;
     #endif
 
   } else if(CONN_TYPE == ARDUINO_CONN) {
 
     #if defined(HAS_KINETISK_UART5) || defined (HAS_KINETISK_LPUART0)
-    Serial6.print(message_tx);
+    Serial6.println(message_tx);
     last_tx = current_time;
     #endif
 
@@ -779,11 +855,10 @@ void BowieComms::processAction(Msg m) {
     if(m.pck1.cmd == 'X' || m.pck2.cmd == 'X') {
       // reply with our id
       delay(20);
-      connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
+      //connSend('$', 'W', 1, ROBOT_ID, 'W', 1, ROBOT_ID, '!' );
     }
   } else {
-    //chooseNextMessage();
-
+    chooseNextMessage();
     // the instance where REPLY_ENABLED would be false is when
     // a module is connected (ie, with an arduino), and the Bowie
     // Brain has SIMPLE_MESSAGE_FORWARDING enabled. we wouldn't
