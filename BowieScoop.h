@@ -26,6 +26,9 @@
 #ifndef _BOWIESCOOP_H_
 #define _BOWIESCOOP_H_
 
+// optional servo positional debugging
+#define SERVO_DEBUG False
+
 // Servo positions
 #define END_MIN 700 // up
 #define END_PARALLEL_TOP 2300 // parallel to ground when arm is raised, raised a bit to keep debris in

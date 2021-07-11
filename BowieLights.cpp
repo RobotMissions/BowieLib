@@ -64,19 +64,24 @@ void BowieLights::dimLights() {
 }
 
 void BowieLights::setLight(uint8_t led_num, uint8_t val) {
-  if(led_num == 0) {
+  switch (led_num) {
+  case 0:
     analogWrite(BRIGHT_LED_FRONT_LEFT, val);
     led_val[0] = val;
-  } else if(led_num == 1) {
+    break;
+  case 1:
     analogWrite(BRIGHT_LED_FRONT_RIGHT, val);
     led_val[1] = val;
-  } else if(led_num == 2) {
+    break;
+  case 2:
     analogWrite(BRIGHT_LED_BACK_LEFT, val);
     led_val[2] = val;
-  } else if(led_num == 3) {
+    break;
+  case 3:
     analogWrite(BRIGHT_LED_BACK_RIGHT, val);
     led_val[3] = val;
-  } else if(led_num == 99) {
+    break;
+  case 99:
     analogWrite(BRIGHT_LED_FRONT_LEFT, val);
     analogWrite(BRIGHT_LED_BACK_LEFT, val);
     analogWrite(BRIGHT_LED_FRONT_RIGHT, val);
@@ -84,6 +89,10 @@ void BowieLights::setLight(uint8_t led_num, uint8_t val) {
     for(int i=0; i<4; i++) {
       led_val[i] = val;
     }
+    break;
+  default:
+    Serial.println("ERROR: Undefined led_num specified");
+    break;
   }
 }
 
